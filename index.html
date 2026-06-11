@@ -317,6 +317,18 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); }
   white-space: nowrap; pointer-events: none; }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ── FAB ── */
+.fab {
+  position: fixed; bottom: 90px; right: 18px;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #16a34a);
+  border: none; color: #000; font-size: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 24px rgba(74,222,128,.45); z-index: 500; transition: transform .15s;
+}
+.fab:active { transform: scale(0.9); }
+.fab.hidden { display: none; }
+
 /* scrollbar */
 ::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -680,7 +692,7 @@ window.showTab = (tab, el) => {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('page-' + tab).classList.add('active');
-  if (tab === 'alerts') renderAlertsPage();
+  updateFab(tab); if (tab === 'alerts') renderAlertsPage();
   if (tab === 'family') renderFamily();
 };
 
@@ -1210,6 +1222,17 @@ window.renderFamily = () => {
 };
 
 // ── BOOT ─────────────────────────────────────────────────────
+
+// FAB visibility per tab
+function updateFab(tab) {
+  const fab = document.getElementById('fabAddItem');
+  if (!fab) return;
+  fab.classList.toggle('hidden', tab !== 'shop' && tab !== 'stock');
+  fab.onclick = tab === 'stock' ? () => openStockModal() : () => toggleAddShopPanel();
+  fab.title = tab === 'stock' ? 'Novo produto no estoque' : 'Adicionar item à lista';
+}
+window.fabAction = () => toggleAddShopPanel();
+
 async function boot() {
   // check saved identity
   const saved = localStorage.getItem('mercado_me');
@@ -1252,5 +1275,44 @@ async function boot() {
 
 boot();
 </script>
+
+<!-- FAB: adicionar item -->
+<button class="fab" id="fabAddItem" onclick="fabAction()" title="Adicionar item">＋</button>
+
 </body>
 </html>
+Concluído
+Aqui está o código completo! Agora no editor do GitHub:
+
+Seleciona tudo no editor (linha 1 até o final)
+Apaga
+Cola o código acima
+Clica "Commit changes..." no topo
+Confirma clicando em "Commit changes" no popup
+Dica: no celular, toca no início do código, segura até aparecer "Selecionar tudo" e usa essa opção para selecionar tudo de uma vez! 😊
+
+1781209145256_image.png
+como salvo agora?
+
+17:19
+Está no github.dev no PC! Ótimo, muito mais fácil assim.
+
+Mas vejo que o código colado começou com bash e cat /mnt/user-data/outputs/index.html nas primeiras linhas — isso está errado, precisa apagar essas linhas extras do início.
+
+Faça assim:
+
+Clica dentro do editor
+Ctrl+A para selecionar tudo
+Delete para apagar tudo
+Ctrl+V para colar o código novamente — mas desta vez cole só a partir de <!DOCTYPE html> ignorando as primeiras linhas com bash e cat
+Depois de colar corretamente:
+
+Ctrl+S para salvar
+Vai aparecer um ícone de "Source Control" na barra lateral esquerda (ícone de ramificação com um número)
+Clica nele
+Escreve uma mensagem tipo update na caixa
+Clica "Commit & Push"
+Me fala quando fizer isso! 🚀
+
+
+
